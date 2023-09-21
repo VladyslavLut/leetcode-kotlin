@@ -1,14 +1,14 @@
 class TwoSum {
     class Solution {
         fun twoSum(nums: IntArray, target: Int): IntArray {
-            for (index in 0 until (nums.size - 1)) {
-                val first = nums[index]
-                for (nextIndex in (index + 1) until nums.size) {
-                    val second = nums[nextIndex]
-                    if (first + second == target) {
-                        return intArrayOf(index, nextIndex)
-                    }
+            val map = HashMap<Int, Int>(nums.size)
+            for (index in nums.indices) {
+                val number = nums[index]
+                val storedIndex = map[number]
+                if (storedIndex != null) {
+                    return intArrayOf(storedIndex, index)
                 }
+                map[target - number] = index
             }
             return IntArray(0)
         }
