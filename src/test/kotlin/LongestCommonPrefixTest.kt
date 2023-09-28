@@ -9,7 +9,7 @@ class LongestCommonPrefixTest {
         val prefix = solution.longestCommonPrefix(strings)
 
         assert(prefix == "fl") {
-            "\nExpected: ${strings.joinToString()} prefix='fl'\nActual: prefix=$prefix"
+            "\nInput: ${strings.joinToString()} \nExpected: prefix='fl'\nActual: prefix=$prefix"
         }
     }
 
@@ -21,7 +21,7 @@ class LongestCommonPrefixTest {
         val prefix = solution.longestCommonPrefix(strings)
 
         assert(prefix == "") {
-            "\nExpected: ${strings.joinToString()} prefix=''\nActual: prefix=$prefix"
+            "\nInput: ${strings.joinToString()} \nExpected: prefix=''\nActual: prefix=$prefix"
         }
     }
 
@@ -33,7 +33,7 @@ class LongestCommonPrefixTest {
         val prefix = solution.longestCommonPrefix(strings)
 
         assert(prefix == "") {
-            "\nExpected: ${strings.joinToString()} prefix=''\nActual: prefix=$prefix"
+            "\nInput: ${strings.joinToString()} \nExpected: prefix=''\nActual: prefix=$prefix"
         }
     }
 
@@ -45,7 +45,7 @@ class LongestCommonPrefixTest {
         val prefix = solution.longestCommonPrefix(strings)
 
         assert(prefix == "apple") {
-            "\nExpected: ${strings.joinToString()} prefix='apple'\nActual: prefix=$prefix"
+            "\nInput: ${strings.joinToString()} \nExpected: prefix='apple'\nActual: prefix=$prefix"
         }
     }
 
@@ -57,7 +57,7 @@ class LongestCommonPrefixTest {
         val prefix = solution.longestCommonPrefix(strings)
 
         assert(prefix == "") {
-            "\nExpected: ${strings.joinToString()} prefix=''\nActual: prefix=$prefix"
+            "\nInput: ${strings.joinToString()} \nExpected: prefix=''\nActual: prefix=$prefix"
         }
     }
 }
