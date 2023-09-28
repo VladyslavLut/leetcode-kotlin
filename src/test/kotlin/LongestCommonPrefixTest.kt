@@ -60,4 +60,16 @@ class LongestCommonPrefixTest {
             "\nInput: ${strings.joinToString()} \nExpected: prefix=''\nActual: prefix=$prefix"
         }
     }
+
+    @Test
+    fun `LongestCommonPrefixTest test 6`() {
+        val solution = LongestCommonPrefix.Solution()
+        val strings = arrayOf("ab", "a")
+
+        val prefix = solution.longestCommonPrefix(strings)
+
+        assert(prefix == "a") {
+            "\nInput: ${strings.joinToString()} \nExpected: prefix='a'\nActual: prefix=$prefix"
+        }
+    }
 }

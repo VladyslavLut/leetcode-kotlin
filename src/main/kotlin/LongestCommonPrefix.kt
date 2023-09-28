@@ -1,15 +1,17 @@
 class LongestCommonPrefix {
     class Solution {
         fun longestCommonPrefix(strings: Array<String>): String {
-            var commonPrefix = strings.first()
-            for (index in strings.indices) {
-                val string = strings[index]
-                while (string.indexOf(commonPrefix) != 0) {
-                    commonPrefix = commonPrefix.dropLast(1)
+            val firstString = strings.first()
+            for (charIndex in firstString.indices) {
+                val char = firstString[charIndex]
+                for (index in 1 until strings.size) {
+                    val string = strings[index]
+                    if (charIndex == string.length || char != string[charIndex]) {
+                        return string.substring(0 until charIndex)
+                    }
                 }
-                if (commonPrefix.isEmpty()) return ""
             }
-            return commonPrefix
+            return firstString
         }
     }
 }
