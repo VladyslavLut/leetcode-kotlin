@@ -2,7 +2,7 @@ import java.util.concurrent.Semaphore;
 
 public class PrintInOrder {
 
-    static class SemaphoresFoo {
+    static class SemaphoresFoo implements OrderedPrinter {
 
         private final Semaphore first = new Semaphore(1);
         private final Semaphore second = new Semaphore(1);
@@ -17,18 +17,21 @@ public class PrintInOrder {
             }
         }
 
+        @Override
         public void first(Runnable printFirst) throws InterruptedException {
             third.acquire();
             printFirst.run();
             first.release();
         }
 
+        @Override
         public void second(Runnable printSecond) throws InterruptedException {
             first.acquire();
             printSecond.run();
             second.release();
         }
 
+        @Override
         public void third(Runnable printThird) throws InterruptedException {
             second.acquire();
             printThird.run();
@@ -36,40 +39,41 @@ public class PrintInOrder {
         }
     }
 
-    static class SynchronizedFoo {
+    static class SynchronizedFoo implements OrderedPrinter {
 
-        private boolean isFirst = false;
-        private boolean isSecond = false;
-        private boolean isThird = true;
+        private int state = 0;
 
         public SynchronizedFoo() {
 
         }
 
+        @Override
         public synchronized void first(Runnable printFirst) throws InterruptedException {
-            while (!isThird) {
+            while (state != 0) {
                 wait();
             }
             printFirst.run();
-            isFirst = true;
+            state = 1;
             notifyAll();
         }
 
+        @Override
         public synchronized void second(Runnable printSecond) throws InterruptedException {
-            while (!isFirst) {
+            while (state != 1) {
                 wait();
             }
             printSecond.run();
-            isSecond = true;
+            state = 2;
             notifyAll();
         }
 
+        @Override
         public synchronized void third(Runnable printThird) throws InterruptedException {
-            while (!isSecond) {
+            while (state != 2) {
                 wait();
             }
             printThird.run();
-            isThird = true;
+            state = 0;
             notifyAll();
         }
     }
