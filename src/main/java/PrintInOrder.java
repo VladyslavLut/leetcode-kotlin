@@ -1,13 +1,14 @@
 import java.util.concurrent.Semaphore;
 
 public class PrintInOrder {
-    class Foo {
 
-        private Semaphore first = new Semaphore(1);
-        private Semaphore second = new Semaphore(1);
-        private Semaphore third = new Semaphore(1);
+    static class SemaphoresFoo {
 
-        public Foo() {
+        private final Semaphore first = new Semaphore(1);
+        private final Semaphore second = new Semaphore(1);
+        private final Semaphore third = new Semaphore(1);
+
+        public SemaphoresFoo() {
             try {
                 first.acquire();
                 second.acquire();
@@ -35,7 +36,42 @@ public class PrintInOrder {
         }
     }
 
-    public static void main(String[] args) {
-        System.out.println("Hello world");
+    static class SynchronizedFoo {
+
+        private boolean isFirst = false;
+        private boolean isSecond = false;
+        private boolean isThird = true;
+
+        public SynchronizedFoo() {
+
+        }
+
+        public synchronized void first(Runnable printFirst) throws InterruptedException {
+            while (!isThird) {
+                wait();
+            }
+            printFirst.run();
+            isFirst = true;
+            notifyAll();
+        }
+
+        public synchronized void second(Runnable printSecond) throws InterruptedException {
+            while (!isFirst) {
+                wait();
+            }
+            printSecond.run();
+            isSecond = true;
+            notifyAll();
+        }
+
+        public synchronized void third(Runnable printThird) throws InterruptedException {
+            while (!isSecond) {
+                wait();
+            }
+            printThird.run();
+            isThird = true;
+            notifyAll();
+        }
     }
+
 }
